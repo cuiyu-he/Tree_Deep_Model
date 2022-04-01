@@ -22,6 +22,7 @@ def _time_window_stamp():
 
 
 def _time_converter(x, boundaries):
+    #create and return name tag from 0,1,2,...,9
     tag = -1
     if x > boundaries[-1]:
         tag = 9
