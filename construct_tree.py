@@ -27,7 +27,7 @@ class TreeInitialize(object):
         self.items = items_total.tolist()
         return self.items
 
-    def _build_binary_tree(self, root, items):
+    def _build_binary_tree(self, root, items): #root = TreeNode(0)
         if len(items) == 1:
             leaf_node = TreeNode(0, item_id=items[0])
             leaf_node.parent = root.parent
@@ -64,7 +64,7 @@ class TreeInitialize(object):
 
     def random_binary_tree(self):
         root = TreeNode(0)
-        items = self.__random_sort()
+        items = self.__random_sort() #items= "items_total", which is the sorted item_ID by category
         self.root = self._build_binary_tree(root, items)
         _ = self._define_node_index(self.root)
         return self.root
