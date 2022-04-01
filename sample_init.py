@@ -51,8 +51,8 @@ def data_process():
     data_raw = data_raw[:10000]    #take the first 10,000 data (user interations)
     
     user_list = data_raw.user_ID.drop_duplicates().to_list()
-    user_dict = dict(zip(user_list, range(len(user_list))))
-    data_raw['user_ID'] = data_raw.user_ID.apply(lambda x: user_dict[x]) #what does this one do?
+    user_dict = dict(zip(user_list, range(len(user_list))))  #zip(fields, values) method returns an iterator that generates two-items tuples.
+    data_raw['user_ID'] = data_raw.user_ID.apply(lambda x: user_dict[x]) #returns the values of the dic.
     
     item_list = data_raw.item_ID.drop_duplicates().to_list()
     item_dict = dict(zip(item_list, range(len(item_list))))
