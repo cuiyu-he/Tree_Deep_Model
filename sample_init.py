@@ -47,20 +47,27 @@ def data_process():
     """convert and split the raw data."""
     data_raw = pd.read_csv(LOAD_DIR, header=None,
                            names=['user_ID', 'item_ID', 'category_ID', 'behavior_type', 'timestamp'])
-    data_raw = data_raw[:10000]
+    
+    data_raw = data_raw[:10000]    #take the first 10,000 data (user interations)
+    
     user_list = data_raw.user_ID.drop_duplicates().to_list()
     user_dict = dict(zip(user_list, range(len(user_list))))
-    data_raw['user_ID'] = data_raw.user_ID.apply(lambda x: user_dict[x])
+    data_raw['user_ID'] = data_raw.user_ID.apply(lambda x: user_dict[x]) #what does this one do?
+    
     item_list = data_raw.item_ID.drop_duplicates().to_list()
     item_dict = dict(zip(item_list, range(len(item_list))))
     data_raw['item_ID'] = data_raw.item_ID.apply(lambda x: item_dict[x])
+    
     category_list = data_raw.category_ID.drop_duplicates().to_list()
     category_dict = dict(zip(category_list, range(len(category_list))))
     data_raw['category_ID'] = data_raw.category_ID.apply(lambda x: category_dict[x])
+    
     behavior_dict = dict(zip(['pv', 'buy', 'cart', 'fav'], range(4)))
     data_raw['behavior_type'] = data_raw.behavior_type.apply(lambda x: behavior_dict[x])
+    
     time_window = _time_window_stamp()
     data_raw['timestamp'] = data_raw.timestamp.apply(_time_converter, args=(time_window,))
+    
     random_tree = TreeInitialize(data_raw)
     _ = random_tree.random_binary_tree()
     data = data_raw.groupby(['user_ID', 'timestamp'])['item_ID'].apply(list).reset_index()
